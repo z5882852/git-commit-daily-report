@@ -138,11 +138,3 @@ def run(report):
 
 环境变量配置:
    - `OUTPUT_FOLDER`: 报告输出目录 (默认: reports)
-
-#### 2. `feishu.py`: 将生成的报告发送到指定的飞书的多维表格
-
-环境变量配置:
-   - `FEISHU_APP_ID`: 飞书应用ID
-   - `FEISHU_APP_SECRET`: 飞书应用密钥
-   - `APP_TOKEN`: 飞书应用令牌
-   - `TABLE_ID`: 飞书多维表格ID

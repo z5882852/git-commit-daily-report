@@ -43,3 +43,5 @@ reports/
 
 # test file
 test.*
+
+plugins/feishu.py
