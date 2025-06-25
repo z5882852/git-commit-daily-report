@@ -1,5 +1,6 @@
 # Git Commit Daily Report
 > 该README由AI生成。
+
 这是一个自动化工具，用于生成用户在GitHub上的每日代码提交报告。该工具会在指定时间（默认每天上午9点）自动查询指定GitHub用户前一天的所有代码提交，然后使用OpenAI API生成一份详细的日报。
 
 ## 功能特点
@@ -19,8 +20,8 @@
 1. 克隆代码库
 
 ```bash
-git clone <repository-url>
-cd git-commit-report
+git clone https://github.com/z5882852/git-commit-daily-report.git
+cd git-commit-daily-report
 ```
 
 2. 安装依赖
@@ -55,11 +56,10 @@ python main.py
 
 ### 手动生成报告
 
-如果需要立即生成报告，可以编辑`main.py`文件，取消注释以下行:
+如果需要立即生成报告，可以编辑`.env`文件，修复以下内容:
 
-```python
-# 取消注释以下行来立即生成报告
-# generate_daily_report()
+```env
+GENERATE_ON_START=true
 ```
 
 然后运行:
@@ -79,7 +79,6 @@ python main.py
 - `OPENAI_BASE_URL`: OpenAI API基础URL (默认: https://api.openai.com/v1)
 - `OPENAI_MODEL`: 使用的OpenAI模型 (默认: gpt-3.5-turbo)
 - `REPORT_TIME`: 每日生成报告的时间 (默认: 09:00)
-- `OUTPUT_FOLDER`: 报告输出目录 (默认: reports)
 - `GENERATE_ON_START`: 启动程序时立即生成报告 (默认: false)
 - `HTTP_PROXY`: HTTP代理设置（如有需要）
 - `HTTPS_PROXY`: HTTPS代理设置（如有需要）
@@ -98,6 +97,8 @@ python main.py
   - 提交消息
   - 更改统计
 
+> 可以通过修改 utils/promot.py 来自定义报告生成的提示内容，以满足不同的需求。
+
 ## 注意事项
 
 - 确保GitHub令牌有足够的权限读取仓库信息
@@ -115,7 +116,6 @@ python main.py
 插件示例：
 
 ```python
-# plugins/example_plugin.py
 def run(report):
     """
     插件入口函数
@@ -134,15 +134,15 @@ def run(report):
 
 系统自带以下示例插件：
 
-1. `example_plugin.py`: 在报告末尾添加签名和时间戳
-2. `email_sender.py`: 将生成的报告发送到指定的邮箱
+#### 1. `save_file.py`: 将生成的报告保存为markdown文件
 
-邮件发送插件需要在 `.env` 文件中添加以下配置：
+环境变量配置:
+   - `OUTPUT_FOLDER`: 报告输出目录 (默认: reports)
 
-```
-SMTP_SERVER=smtp.example.com
-SMTP_PORT=587
-SMTP_USERNAME=your_username
-SMTP_PASSWORD=your_password
-SENDER_EMAIL=sender@example.com
-RECIPIENT_EMAILS=recipient1@example.com,recipient2@example.com 
+#### 2. `feishu.py`: 将生成的报告发送到指定的飞书的多维表格
+
+环境变量配置:
+   - `FEISHU_APP_ID`: 飞书应用ID
+   - `FEISHU_APP_SECRET`: 飞书应用密钥
+   - `APP_TOKEN`: 飞书应用令牌
+   - `TABLE_ID`: 飞书多维表格ID
