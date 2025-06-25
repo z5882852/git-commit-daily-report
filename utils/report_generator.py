@@ -18,16 +18,16 @@ def generate_report(repo_summaries, date_str, timezone='Asia/Shanghai'):
     """
     try:
         # 格式化标题的日期
-        date_obj = datetime.strptime(date_str, "%Y-%m-%d")
+        date_obj = datetime.now()
         tz = pytz.timezone(timezone)
         date_obj = tz.localize(date_obj)
-        formatted_date = date_obj.strftime("%Y年%m月%d日 %H:%M:%S %Z")
+        formatted_date = date_obj.strftime("%Y年%m月%d日 %H:%M:%S")
         
         # 计算提交总数
         total_commits = sum(repo['commit_count'] for repo in repo_summaries)
         
         # 生成报告头部
-        report = f"""# 代码提交日报 {formatted_date}
+        report = f"""# 日报 {formatted_date}
 
 ## 概览
 - **日期**: {formatted_date}
@@ -39,8 +39,7 @@ def generate_report(repo_summaries, date_str, timezone='Asia/Shanghai'):
         
         # 为每个仓库添加摘要
         for repo in repo_summaries:
-            report += f"""{repo['summary']}
-"""         
+            report += f"\n{repo['summary']}\n\n"         
             if False:
                 report += f"\n### 详细提交\n"
                 # 添加单个提交
